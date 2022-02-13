@@ -27,7 +27,7 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
   ];
 
   int currentPage = 0;
-
+  bool isDone = false;
   @override
   Widget build(BuildContext context) {
     PageController controller = new PageController();
@@ -41,6 +41,7 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
             onPageChanged: (value) {
               setState(() {
                 currentPage = value;
+                if (value == 2) isDone = true;
               });
             },
             controller: controller,
@@ -53,42 +54,54 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
                 children: [
                   SizedBox(
                     height: 10,
-                    width: 100,
+                    width: MediaQuery.of(context).size.width / 5,
                     child: Center(
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Container(
                             height: 10,
                             width: 10,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: currentPage == index
-                                    ? ThemeColors.mainOrange
-                                    : ThemeColors.mainOrange.withOpacity(0.6)),
+                                    ? ThemeColors.mainBlue
+                                    : ThemeColors.softBlue),
                           ),
                         ),
                         itemCount: 3,
                       ),
                     ),
                   ),
-                  spacer(10),
-                  InkWell(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AppPageview(),
-                        )),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: ThemeColors.blue,
-                      ),
-                      height: 44,
-                      width: MediaQuery.of(context).size.width - 32,
-                    ),
-                  )
+                  spacer(20),
+                  !isDone
+                      ? const SizedBox()
+                      : InkWell(
+                          onTap: () => Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AppPageview(),
+                              ),
+                              (route) => false),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: ThemeColors.blue,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Hadi Başlayalım",
+                                style: TextStyle(
+                                    color: ThemeColors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            height: 44,
+                            width: MediaQuery.of(context).size.width - 32,
+                          ),
+                        )
                 ],
               ))
         ],
@@ -115,7 +128,9 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
         imgContainer(index.toString()),
         titleText(titles[index]),
         spacer(20),
-        descText(descs[index]),
+        Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: descText(descs[index])),
         spacer(20)
       ],
     );
@@ -131,12 +146,12 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
   }
 }
 
-Widget titleText(String title) {
+Widget titleText(String title, {Color? color}) {
   return Text(
     title,
     textAlign: TextAlign.left,
     style: TextStyle(
-      color: ThemeColors.readerDark,
+      color: color ?? ThemeColors.readerDark,
       fontFamily: TextFonts.helvatica,
       fontSize: 22,
       fontWeight: FontWeight.bold,

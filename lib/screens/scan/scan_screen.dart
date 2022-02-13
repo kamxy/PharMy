@@ -18,6 +18,14 @@ class ScanScreen extends StatefulWidget {
 class _ScanScreenState extends State<ScanScreen> {
   List<bool> checkList = [false, false, false];
   String barcodeData = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scan();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,10 +61,10 @@ class _ScanScreenState extends State<ScanScreen> {
                             child: Text(
                               barcodeData == ''
                                   ? "Okutmak İçin Tıkla"
-                                  : barcodeData.split("21").last,
+                                  : barcodeData.split("21").first,
                               style: TextStyle(
                                   color: ThemeColors.darkThemeGrey,
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -153,7 +161,7 @@ class _ScanScreenState extends State<ScanScreen> {
             checkList[index] ? Icons.check_box : Icons.crop_square_outlined,
             color: checkList[index]
                 ? ThemeColors.mainBlue
-                : ThemeColors.readerDark,
+                : ThemeColors.darkThemeGrey,
             size: 28,
           ),
           spacerVertical(10),
@@ -161,7 +169,7 @@ class _ScanScreenState extends State<ScanScreen> {
             text,
             textAlign: TextAlign.left,
             style: TextStyle(
-                color: ThemeColors.readerDark,
+                color: ThemeColors.darkThemeGrey,
                 fontFamily: TextFonts.helvatica,
                 fontSize: 14,
                 fontWeight: FontWeight.w500),

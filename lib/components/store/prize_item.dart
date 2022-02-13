@@ -16,13 +16,15 @@ class PrizeItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: InkWell(
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PrizeDetailScreen(
-                prize: value,
-              ),
-            )),
+        onTap: () => detail
+            ? () {}
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PrizeDetailScreen(
+                    prize: value,
+                  ),
+                )),
         child: Container(
           height: 230,
           decoration: detail

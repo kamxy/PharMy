@@ -55,18 +55,30 @@ class LocationItem extends StatelessWidget {
                         barRadius: const Radius.circular(10),
                         progressColor: ThemeColors.mainBlue),
                     Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        'Doluluk Oranı %' +
-                            (location.totalPercent * 100)
-                                .toString()
-                                .split(".")
-                                .first,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: ThemeColors.subtitleGrey,
-                          fontSize: 11,
-                        ),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Doluluk Oranı',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: ThemeColors.darkThemeGrey,
+                            ),
+                          ),
+                          Text(
+                            "%" +
+                                (location.totalPercent * 100)
+                                    .toString()
+                                    .split(".")
+                                    .first
+                                    .toString(),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: ThemeColors.darkThemeGrey,
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   ],

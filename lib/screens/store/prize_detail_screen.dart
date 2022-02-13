@@ -6,6 +6,7 @@ import 'package:phar_my/models/price_model.dart';
 import 'package:phar_my/theme/style.dart';
 import 'package:phar_my/utils/notifiers.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/common/commons.dart';
 import '../onboarding_carousel_screen.dart';
@@ -36,7 +37,7 @@ class _PrizeDetailScreenState extends State<PrizeDetailScreen> {
                   onTap: () => Navigator.pop(context),
                   child: Icon(
                     Icons.arrow_back_ios,
-                    color: ThemeColors.readerDark,
+                    color: ThemeColors.mainBlue,
                   ),
                 ),
                 titleText("Detay"),
@@ -73,6 +74,8 @@ class _PrizeDetailScreenState extends State<PrizeDetailScreen> {
                   if (widget.donation == null) {
                     Provider.of<AppNotifier>(context, listen: false)
                         .minusWithValue(widget.prize.wp);
+
+                    showFlushbar("Ödülü Aldınız", context);
                   } else {
                     setState(() {
                       widget.donation!.current++;
@@ -88,7 +91,7 @@ class _PrizeDetailScreenState extends State<PrizeDetailScreen> {
                       color: ThemeColors.mainBlue),
                   child: Center(
                       child: Text(
-                    "Ödülü Al",
+                    widget.donation == null ? "Ödülü Al" : "Bağış Yap",
                     style: TextStyle(
                         color: ThemeColors.white,
                         fontSize: 18,
@@ -98,22 +101,25 @@ class _PrizeDetailScreenState extends State<PrizeDetailScreen> {
               ),
             ),
             spacer(20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ThemeColors.gray),
-                child: Center(
-                    child: Text(
-                  "Websitesine Git",
-                  style: TextStyle(
-                      color: ThemeColors.mainBlue,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                )),
+            InkWell(
+              onTap: () => _launchURL(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: ThemeColors.gray),
+                  child: Center(
+                      child: Text(
+                    "Websitesine Git",
+                    style: TextStyle(
+                        color: ThemeColors.mainBlue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  )),
+                ),
               ),
             )
           ],
@@ -121,4 +127,8 @@ class _PrizeDetailScreenState extends State<PrizeDetailScreen> {
       ),
     );
   }
+}
+
+void _launchURL() async {
+  if (!await launch("https://flutterfestivali.com/")) throw 'Could not launch';
 }

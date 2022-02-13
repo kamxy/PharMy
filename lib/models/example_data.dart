@@ -22,6 +22,22 @@ List<Location> exampleLocations = [
       plasticPercent: 0.6,
       totalPercent: 0.6),
   Location(
+      name: "Abdi İbrahim",
+      km: "0,7",
+      drugPercent: 0.82,
+      imagePath:
+          "https://firebasestorage.googleapis.com/v0/b/kou-research-project-tracking.appspot.com/o/deneme%2Fabdi1.png?alt=media&token=761b3cde-7cb3-40c9-aacd-a7d7c09573ea",
+      plasticPercent: 0.41,
+      totalPercent: 0.83),
+  Location(
+      name: "İst Marina Avm",
+      km: "0,7",
+      drugPercent: 0.12,
+      imagePath:
+          "https://firebasestorage.googleapis.com/v0/b/kou-research-project-tracking.appspot.com/o/deneme%2Fistmarina.png?alt=media&token=c14ca815-8a16-46a6-a263-897751ab12f5",
+      plasticPercent: 0.76,
+      totalPercent: 0.84),
+  Location(
       name: "Bim",
       km: "0,7",
       drugPercent: 0.3,
@@ -31,7 +47,38 @@ List<Location> exampleLocations = [
       totalPercent: 0.35),
 ];
 
-List<Drug> exampleDrugs = [];
+List<Drug> exampleDrugs = [
+  Drug(
+      count: 3286,
+      imgUrl:
+          "https://firebasestorage.googleapis.com/v0/b/kou-research-project-tracking.appspot.com/o/deneme%2Fcoldaway.png?alt=media&token=79c61806-5c09-48c5-9de7-1382827ce162",
+      name: "Coldaway Cold"),
+  Drug(
+      count: 3125,
+      imgUrl:
+          "https://firebasestorage.googleapis.com/v0/b/kou-research-project-tracking.appspot.com/o/deneme%2Frastel.png?alt=media&token=6ebeeea6-f267-4585-b51b-72a8ebcf6176",
+      name: "Rastel"),
+  Drug(
+      count: 1927,
+      imgUrl:
+          "https://firebasestorage.googleapis.com/v0/b/kou-research-project-tracking.appspot.com/o/deneme%2Fapranax.png?alt=media&token=ee0d0b78-42dc-4dc0-b2c1-30a58edce5eb",
+      name: "Apranax Fort"),
+  Drug(
+      count: 1282,
+      imgUrl:
+          "https://firebasestorage.googleapis.com/v0/b/kou-research-project-tracking.appspot.com/o/deneme%2Fabetyl.png?alt=media&token=861d8b41-c554-4f67-acaa-029cb50feda9",
+      name: "Abetly"),
+  Drug(
+      count: 2382,
+      imgUrl:
+          "https://firebasestorage.googleapis.com/v0/b/kou-research-project-tracking.appspot.com/o/deneme%2Fdiafurylfort.png?alt=media&token=e54a2da4-0fba-4d0f-8608-135410a0365c",
+      name: "Diafuryl Fort"),
+  Drug(
+      count: 2382,
+      imgUrl:
+          "https://firebasestorage.googleapis.com/v0/b/kou-research-project-tracking.appspot.com/o/deneme%2Fcitoles.png?alt=media&token=2b08580b-47c2-4eed-8be9-e9daa5753b78",
+      name: "Citioles"),
+];
 
 List<Prize> examplePrize = [
   Prize(

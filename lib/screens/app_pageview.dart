@@ -47,9 +47,9 @@ class _AppPageviewState extends State<AppPageview> {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               const HomeScreen(),
-              const DrugDetailScreen(),
               const ScanScreen(),
               const LocationScreen(),
+              const DrugDetailScreen(),
               const StoreScreen()
             ],
           ),
@@ -66,9 +66,9 @@ class _AppPageviewState extends State<AppPageview> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     bottomNavigationBarItem(Icons.home, 0),
-                    bottomNavigationBarItem(Icons.medical_services_rounded, 1),
-                    bottomNavigationBarItem(Icons.qr_code_scanner_rounded, 2),
-                    bottomNavigationBarItem(Icons.location_on_outlined, 3),
+                    bottomNavigationBarItem(Icons.qr_code_scanner_rounded, 1),
+                    bottomNavigationBarItem(Icons.location_on_outlined, 2),
+                    bottomNavigationBarItem(Icons.medical_services_rounded, 3),
                     bottomNavigationBarItem(Icons.shopping_cart_outlined, 4)
                   ],
                 ),

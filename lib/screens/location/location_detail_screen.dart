@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:phar_my/components/common/commons.dart';
@@ -16,6 +17,7 @@ class LocationDetailScreen extends StatefulWidget {
 }
 
 class _LocationDetailScreenState extends State<LocationDetailScreen> {
+  bool isClicked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +113,33 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
           ),
           spacer(30),
           containerItem("drug"),
-          containerItem("pet")
+          containerItem("pet"),
+          Expanded(child: SizedBox()),
+          isClicked
+              ? const SizedBox()
+              : InkWell(
+                  onTap: () async {
+                    isClicked = true;
+                    setState(() {});
+                    showFlushbar("Toplama Talebiniz Alındı", context);
+                  },
+                  child: Container(
+                    height: 54,
+                    width: MediaQuery.of(context).size.width - 32,
+                    decoration: BoxDecoration(
+                        color: ThemeColors.mainBlue,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                        child: Text(
+                      "Toplama Talebi Gönder",
+                      style: TextStyle(
+                          color: ThemeColors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    )),
+                  ),
+                ),
+          spacer(30)
         ],
       ),
     );
@@ -124,7 +152,7 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Container(
         padding: const EdgeInsets.all(10),
-        height: 76,
+        height: 80,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: ThemeColors.gray),
         child: Row(
@@ -193,10 +221,10 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

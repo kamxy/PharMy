@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:phar_my/components/common/commons.dart';
+import 'package:phar_my/screens/app_pageview.dart';
 import 'package:phar_my/screens/location/location_detail_screen.dart';
 import 'package:phar_my/screens/onboarding_carousel_screen.dart';
 import 'package:phar_my/theme/style.dart';
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     margin: const EdgeInsets.all(16),
-                    height: 120,
+                    height: 130,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -107,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   )),
                   Container(
-                    height: 40,
+                    height: 80,
                     color: ThemeColors.white,
                   )
                 ],
@@ -172,18 +173,64 @@ class _HomeScreenState extends State<HomeScreen> {
                       progressColor: ThemeColors.mainBlue,
                       alignment: MainAxisAlignment.spaceEvenly,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Doluluk Oranı',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: ThemeColors.darkThemeGrey,
+                            ),
+                          ),
+                          Text(
+                            "%" +
+                                (value.totalPercent * 100)
+                                    .toString()
+                                    .split(".")
+                                    .first
+                                    .toString(),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: ThemeColors.darkThemeGrey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
               ),
-              SizedBox(
-                width: 10,
+              spacerVertical(10),
+              InkWell(
+                onTap: () => pageController.jumpToPage(1),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.qr_code_scanner_sharp,
+                      color: ThemeColors.mainBlue,
+                      size: 50,
+                    ),
+                    spacer(10),
+                    Container(
+                      width: 80,
+                      child: Text(
+                        'Atık Noktası Seç',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: ThemeColors.darkThemeGrey,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Icon(
-                Icons.directions,
-                color: ThemeColors.mainBlue,
-                size: 50,
-              )
+              spacerVertical(10)
             ],
           ),
           height: 150,

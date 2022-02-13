@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:phar_my/components/common/commons.dart';
+import 'package:phar_my/models/example_data.dart';
 import 'package:phar_my/screens/onboarding_carousel_screen.dart';
 import 'package:phar_my/theme/style.dart';
 
@@ -15,7 +17,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
     return Scaffold(
       appBar: AppBar(
           centerTitle: false,
-          title: titleText("İlaç Atığı Miktartları"),
+          title: titleText("İlaç Atığı Miktarları"),
           shadowColor: ThemeColors.transparan,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           bottom: PreferredSize(
@@ -28,7 +30,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                   child: // Figma Flutter Generator Aada6kasm6aralk2021tarihleriarasndatoplananatkilamiktarlargsterilmitirWidget - TEXT
                       Text(
                     'Aşağıda 6 Kasım - 6 Aralık 2021 tarihleri arasında \ntoplanan atık ilaç miktarları gösterilmiştir',
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: ThemeColors.darkThemeGrey,
                       fontFamily: TextFonts.helvatica,
@@ -38,17 +40,18 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             ),
           )),
       body: ListView.builder(
-        itemCount: 5,
+        itemCount: exampleDrugs.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
             child: Container(
-              height: 60,
+              height: 70,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: ThemeColors.mainGray),
+                  color: ThemeColors.gray),
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -57,20 +60,20 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                         width: 60,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            color: ThemeColors.blue),
+                            image: DecorationImage(
+                                image:
+                                    NetworkImage(exampleDrugs[index].imgUrl))),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      spacerVertical(10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          titleText("Rastel"),
-
-                          // Figma Flutter Generator 3286adettoplanmtrWidget - TEXT
+                          titleText(exampleDrugs[index].name,
+                              color: ThemeColors.dark),
                           Text(
-                            '3286 Adet Toplanmıştır.',
+                            exampleDrugs[index].count.toString() +
+                                " Adet Toplanmıştır.",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: ThemeColors.subtitleGrey,
