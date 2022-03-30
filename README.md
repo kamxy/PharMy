@@ -1,4 +1,4 @@
-# Google Flutter Hackhathon #1 🥇
+# Google DSC Flutterfest Hackhathon #1 🥇
 
 Teknoloji olarak flutter framework kullandık.
 
