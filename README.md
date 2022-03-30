@@ -1,6 +1,4 @@
-# Pharmate
-
-## Google Flutter Hackhathon #1 🥇
+# Google Flutter Hackhathon #1 🥇
 
 Teknoloji olarak flutter framework kullandık.
 
