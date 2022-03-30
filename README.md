@@ -1,6 +1,6 @@
-# phar_my
+# Pharmate
 
-## Getting Started
+## Google Flutter Hackhathon #1 App
 
 Teknoloji olarak flutter framework kullandık.
 
