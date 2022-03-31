@@ -1,5 +1,8 @@
 # Google DSC Flutterfest Hackhathon #1 🥇
 
+![alt text](https://github.com/kamxy/Pharmate/blob/main/pharmate_logo.png?raw=true)
+
+
 Teknoloji olarak flutter framework kullandık.
 
 Uygulamayı çalıştırmak için flutter run komutunu çalıştırmanız yeterlidir. Her 2 platformda da çalışır.
