@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:phar_my/components/common/commons.dart';
 import 'package:phar_my/screens/onboarding_carousel_screen.dart';
+import 'package:phar_my/screens/store/store_screen.dart';
 import 'package:phar_my/theme/style.dart';
-
-import '../app_pageview.dart';
 
 class ScanDetailScreen extends StatelessWidget {
   const ScanDetailScreen({Key? key}) : super(key: key);
@@ -24,7 +23,7 @@ class ScanDetailScreen extends StatelessWidget {
           spacer(30),
           // Figma Flutter Generator GeridnmniinteekkrlerWidget - TEXT
           Text(
-            'Geri Dönüşümün için Teşekkürler',
+            'Thank you for your recycling',
             textAlign: TextAlign.left,
             style: TextStyle(
               color: ThemeColors.readerDark,
@@ -35,13 +34,12 @@ class ScanDetailScreen extends StatelessWidget {
           ),
           spacer(10),
           Text(
-            'Çevreye katkın sayesinde 0.5 kg karbon \n ayak izinin oluşumunu engelledin',
+            'Thanks to your contribution to the environment, you have prevented the formation of 0.5 kg of carbon footprint',
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: ThemeColors.darkThemeGrey,
                 fontSize: 14,
-                letterSpacing:
-                    0 /*percentages not used in flutter. defaulting to zero*/,
+                letterSpacing: 0,
                 fontWeight: FontWeight.normal,
                 height: 1),
           ),
@@ -51,14 +49,18 @@ class ScanDetailScreen extends StatelessWidget {
             children: [
               titleText("25 "),
               worldIcon(),
-              titleText(" Dünya Puanı Kazandın")
+              titleText(" World Points")
             ],
           ),
           spacer(26),
           InkWell(
             onTap: () {
               Navigator.pop(context);
-              pageController.jumpToPage(4);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StoreScreen(),
+                  ));
             },
             child: Container(
               height: 54,
@@ -68,7 +70,7 @@ class ScanDetailScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               child: Center(
                   child: Text(
-                "Ödülleri Görüntüle",
+                "View Prizes",
                 style: TextStyle(
                     color: ThemeColors.white,
                     fontSize: 18,
@@ -81,16 +83,14 @@ class ScanDetailScreen extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.pop(context);
-              pageController.jumpToPage(0);
             },
             child: Text(
-              'Anasayfaya Dön',
+              'Back to Homepage',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: ThemeColors.mainBlue,
                   fontSize: 16,
-                  letterSpacing:
-                      0 /*percentages not used in flutter. defaulting to zero*/,
+                  letterSpacing: 0,
                   fontWeight: FontWeight.normal,
                   height: 1),
             ),

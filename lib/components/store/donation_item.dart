@@ -73,7 +73,7 @@ class DonationItem extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      'Toplanan Dünya Puanı',
+                      'World Point Collected',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: ThemeColors.darkThemeGrey,
@@ -83,7 +83,7 @@ class DonationItem extends StatelessWidget {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      'Hedeflenen Dünya Puanı',
+                      'Targeted World Score',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: ThemeColors.darkThemeGrey,

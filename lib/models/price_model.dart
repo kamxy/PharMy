@@ -9,4 +9,12 @@ class Prize {
       required this.expireDate,
       required this.wp,
       required this.imgUrl});
+
+  static Prize fromJson(dynamic json) {
+    return Prize(
+        title: json["title"],
+        expireDate: json["expireDate"],
+        wp: json["wp"],
+        imgUrl: json["imgUrl"]);
+  }
 }

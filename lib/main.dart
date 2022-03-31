@@ -1,10 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:phar_my/screens/app_pageview.dart';
-import 'package:phar_my/screens/onboarding_carousel_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:phar_my/screens/common/loading_screen.dart';
+import 'package:phar_my/theme/style.dart';
 import 'package:phar_my/utils/notifiers.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -21,9 +25,16 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           darkTheme: ThemeData.light(),
           theme: ThemeData(
+            appBarTheme: AppBarTheme(
+                shadowColor: ThemeColors.transparan,
+                backgroundColor: ThemeColors.white,
+                centerTitle: true,
+                systemOverlayStyle: SystemUiOverlayStyle.light,
+                iconTheme: IconThemeData(color: ThemeColors.black)),
+            scaffoldBackgroundColor: ThemeColors.white,
             primarySwatch: Colors.blue,
           ),
-          home: OnboardingCarouselScreen()),
+          home: Loadingscreen()),
     );
   }
 }

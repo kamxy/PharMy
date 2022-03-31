@@ -1,13 +1,15 @@
+import 'dart:async';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:phar_my/components/common/commons.dart';
-import 'package:phar_my/screens/app_pageview.dart';
-import 'package:phar_my/screens/location/location_detail_screen.dart';
+import 'package:phar_my/constants/constants.dart';
 import 'package:phar_my/screens/onboarding_carousel_screen.dart';
 import 'package:phar_my/theme/style.dart';
 import 'package:phar_my/utils/notifiers.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/location/location_pop_up_item.dart';
 import '../../models/location_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,253 +19,134 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+late CameraPosition cameraPosition;
+
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
   Location? selectedLocation = null;
+  final Completer<GoogleMapController> _controller = Completer();
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return Consumer<AppNotifier>(
-      builder: (context, value, child) => SafeArea(
-        child: Scaffold(
-          body: Stack(
-            children: [
-              Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(16),
-                    height: 130,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                titleText("Merhaba 👋🏻"),
-                                descText(value.user.name)
-                              ],
-                            ),
-                            Expanded(child: Container()),
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    descText(value.user.worldPoint.toString()),
-                                    spacer(5),
-                                    worldIcon()
-                                  ],
-                                ),
-                                const Text(
-                                  "Dünya Puanı",
-                                  style: TextStyle(fontSize: 10),
-                                )
-                              ],
-                            ),
-                            spacerVertical(10),
-                            Container(
-                              height: 46,
-                              width: 46,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: NetworkImage(value.user.imgUrl))),
-                            )
-                          ],
-                        ),
-                        spacer(20),
-                        Text(
-                          "Sana En Yakın Atık Noktasını Bul",
-                          style: TextStyle(
-                              fontSize: 20, color: ThemeColors.readerDark),
-                        ),
-                        spacer(5),
-                        descText("İlaç atıklarını geri dönüştür!")
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      child: Stack(
-                    children: [
-                      map(),
-                      Positioned(
-                          top: 50,
-                          left: 50,
-                          child: placeMarker(value.locationList[0])),
-                      Positioned(
-                          top: 100,
-                          right: 50,
-                          child: placeMarker(value.locationList[1])),
-                      Positioned(
-                          top: 200,
-                          right: 200,
-                          child: placeMarker(value.locationList[2])),
-                      selectedLocation != null
-                          ? Positioned(
-                              bottom: 20,
-                              right: 0,
-                              child: locationPopUp(selectedLocation!))
-                          : SizedBox(),
-                    ],
-                  )),
-                  Container(
-                    height: 80,
-                    color: ThemeColors.white,
-                  )
-                ],
-              )
-            ],
+      builder: (context, value, child) => Scaffold(
+        appBar: appbar,
+        body: Stack(
+          children: [googleMap(value), carouselSlider(value)],
+        ),
+      ),
+    );
+  }
+
+  AppBar get appbar => AppBar(
+        backgroundColor: ThemeColors.white,
+        centerTitle: false,
+        toolbarHeight: kToolbarHeight - 10,
+        title: Container(
+          height: 34,
+          width: 140,
+          decoration: BoxDecoration(image: assetImage(appLogo)),
+        ),
+      );
+
+  googleMap(AppNotifier value) {
+    return GoogleMap(
+      mapToolbarEnabled: false,
+      buildingsEnabled: true,
+      myLocationButtonEnabled: false,
+      myLocationEnabled: true,
+      tiltGesturesEnabled: false,
+      mapType: MapType.normal,
+      initialCameraPosition: initialCamPosition,
+      compassEnabled: false,
+      markers: value.markers,
+      polylines: {
+        if (value.info != null)
+          getPolyLine(
+            value.info!.polylinePoints
+                .map((e) => LatLng(e.latitude, e.longitude))
+                .toList(),
+          )
+      },
+      onMapCreated: (GoogleMapController controller) {
+        _controller.complete(controller);
+      },
+    );
+  }
+
+  carouselSlider(AppNotifier value) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 110),
+        child: SizedBox(
+          height: 160,
+          width: MediaQuery.of(context).size.width,
+          child: CarouselSlider(
+            carouselController: value.carouselController,
+            items: value.locationList
+                .map((item) => LocationPopUp(value: item))
+                .toList(),
+            options: CarouselOptions(
+              viewportFraction: 0.85,
+              enlargeCenterPage: true,
+              enableInfiniteScroll: false,
+              height: 160,
+              aspectRatio: 1,
+              onPageChanged: (index, reason) {
+                getCameraChange(value.markers.elementAt(index).position);
+                setState(() {
+                  gotoLocation();
+                });
+              },
+            ),
           ),
         ),
       ),
     );
   }
 
-  locationPopUp(Location value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: InkWell(
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LocationDetailScreen(
-                location: value,
-                popup: true,
-              ),
-            )),
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: ThemeColors.white,
-              boxShadow: boxShadow()),
-          child: Row(
-            children: [
-              Hero(
-                tag: value.km,
-                child: Container(
-                  height: 70,
-                  width: 70,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: NetworkImage(value.imagePath))),
-                ),
-              ),
-              spacerVertical(10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: titleText(value.name)),
-                    spacer(5),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: descText(value.km + " km"),
-                    ),
-                    spacer(5),
-                    LinearPercentIndicator(
-                      lineHeight: 10.0,
-                      percent: value.totalPercent,
-                      backgroundColor: ThemeColors.subtitleGrey,
-                      barRadius: const Radius.circular(10),
-                      progressColor: ThemeColors.mainBlue,
-                      alignment: MainAxisAlignment.spaceEvenly,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Doluluk Oranı',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: ThemeColors.darkThemeGrey,
-                            ),
-                          ),
-                          Text(
-                            "%" +
-                                (value.totalPercent * 100)
-                                    .toString()
-                                    .split(".")
-                                    .first
-                                    .toString(),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: ThemeColors.darkThemeGrey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
-                ),
-              ),
-              spacerVertical(10),
-              InkWell(
-                onTap: () => pageController.jumpToPage(1),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.qr_code_scanner_sharp,
-                      color: ThemeColors.mainBlue,
-                      size: 50,
-                    ),
-                    spacer(10),
-                    Container(
-                      width: 80,
-                      child: Text(
-                        'Atık Noktası Seç',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: ThemeColors.darkThemeGrey,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              spacerVertical(10)
-            ],
-          ),
-          height: 150,
-          width: MediaQuery.of(context).size.width - 32,
-        ),
-      ),
-    );
+  Polyline getPolyLine(List<LatLng> latLang) {
+    return Polyline(
+        polylineId: const PolylineId('overview_polyline'),
+        color: Colors.red,
+        width: 6,
+        points: latLang);
   }
 
-  placeMarker(Location value) {
-    return InkWell(
-      onTap: () => setState(() {
-        selectedLocation = value;
-      }),
-      child: Container(
-        height: 60,
-        width: 60,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(width: 5, color: ThemeColors.mainBlue),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(value.imagePath),
-            )),
-      ),
-    );
+  gotoLocation() async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
   }
 
-  Widget map() {
+  sheetItem(IconData icon, String text) {
     return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/map.png"), fit: BoxFit.cover)),
-    );
+        height: 52,
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: ThemeColors.mainBlue,
+            ),
+            horizontalSpace10,
+            Expanded(
+                child: Container(
+              decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: ThemeColors.gray))),
+              height: 52,
+              alignment: Alignment.centerLeft,
+              child: descText(text),
+            )),
+          ],
+        ));
   }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+getCameraChange(LatLng target) {
+  cameraPosition =
+      CameraPosition(bearing: bearing, target: target, tilt: tilt, zoom: zoom);
 }

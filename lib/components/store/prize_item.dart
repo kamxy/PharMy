@@ -62,7 +62,7 @@ class PrizeItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Ödülü Almak İçin Son Tarih: ' + value.expireDate,
+                        'Deadline for Receiving the Award: ' + value.expireDate,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: ThemeColors.darkThemeGrey,

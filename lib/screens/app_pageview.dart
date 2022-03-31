@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:phar_my/models/example_data.dart';
-import 'package:phar_my/screens/drug/drug_detail_screen.dart';
+import 'package:phar_my/components/common/commons.dart';
+import 'package:phar_my/screens/drug/drug_deal_screen.dart';
 import 'package:phar_my/screens/home/home_screen.dart';
-import 'package:phar_my/screens/location/location_screen.dart';
-import 'package:phar_my/screens/scan/scan_screen.dart';
-import 'package:phar_my/screens/store/store_screen.dart';
+import 'package:phar_my/screens/profile/profile_screen.dart';
 import 'package:phar_my/theme/style.dart';
+import 'package:phar_my/utils/helper.dart';
 import 'package:phar_my/utils/notifiers.dart';
 import 'package:provider/provider.dart';
+
+PageController pageController = PageController(initialPage: 1);
+int currentIndex = 1;
 
 class AppPageview extends StatefulWidget {
   const AppPageview({Key? key}) : super(key: key);
@@ -16,70 +18,89 @@ class AppPageview extends StatefulWidget {
   _AppPageviewState createState() => _AppPageviewState();
 }
 
-PageController pageController = PageController();
-int currentIndex = 0;
-
 class _AppPageviewState extends State<AppPageview> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Provider.of<AppNotifier>(context, listen: false)
-        .setDonationList(exampleDonation);
-    Provider.of<AppNotifier>(context, listen: false).setDrugList(exampleDrugs);
-    Provider.of<AppNotifier>(context, listen: false).setUser(expampleUser);
-    Provider.of<AppNotifier>(context, listen: false).setPrizeList(examplePrize);
-    Provider.of<AppNotifier>(context, listen: false)
-        .setLocationList(exampleLocations);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: pageController,
-            onPageChanged: (value) => setState(() {
-              currentIndex = value;
-            }),
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const HomeScreen(),
-              const ScanScreen(),
-              const LocationScreen(),
-              const DrugDetailScreen(),
-              const StoreScreen()
-            ],
-          ),
-          Align(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: ThemeColors.white,
-              ),
-              height: 80,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    bottomNavigationBarItem(Icons.home, 0),
-                    bottomNavigationBarItem(Icons.qr_code_scanner_rounded, 1),
-                    bottomNavigationBarItem(Icons.location_on_outlined, 2),
-                    bottomNavigationBarItem(Icons.medical_services_rounded, 3),
-                    bottomNavigationBarItem(Icons.shopping_cart_outlined, 4)
-                  ],
-                ),
+    return Consumer<AppNotifier>(
+      builder: (context, value, child) => Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Container(
+          height: 70.0,
+          width: 70.0,
+          child: FittedBox(
+            child: FloatingActionButton(
+              onPressed: () {
+                pageController.jumpToPage(1);
+                currentIndex = 1;
+                setState(() {});
+              },
+              backgroundColor: intEq(currentIndex, 1)
+                  ? ThemeColors.softBlue
+                  : ThemeColors.white,
+              child: Icon(
+                Icons.location_on_outlined,
+                color: intEq(currentIndex, 1)
+                    ? ThemeColors.commonBlue
+                    : ThemeColors.darkThemeGrey,
+                size: 36,
               ),
             ),
-            alignment: Alignment.bottomCenter,
-          )
-        ],
+          ),
+        ),
+        body: Stack(
+          children: [
+            PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: pageController,
+              onPageChanged: (value) => setState(() {
+                currentIndex = value;
+              }),
+              children: [
+                const DrugDealScreen(),
+                const HomeScreen(),
+                const ProfileScreen()
+              ],
+            ),
+            Align(
+              child: Container(
+                height: 80,
+                child: Padding(
+                  padding: getHorizontalPadding,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: getBorder,
+                      color: ThemeColors.white,
+                    ),
+                    height: 80,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          bottomNavigationBarItem(
+                              Icons.swap_horizontal_circle, 0),
+                          expandedSpace,
+                          bottomNavigationBarItem(Icons.account_circle, 2)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              alignment: Alignment.bottomCenter,
+            )
+          ],
+        ),
       ),
     );
   }
+
+  BorderRadiusGeometry get getBorder => BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+        bottomLeft: Radius.circular(20),
+        bottomRight: Radius.circular(20),
+      );
 
   Widget bottomNavigationBarItem(icon, index) {
     return Expanded(
@@ -93,12 +114,13 @@ class _AppPageviewState extends State<AppPageview> {
         height: 50,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: index == currentIndex
+            color: intEq(index, currentIndex)
                 ? ThemeColors.softBlue
                 : ThemeColors.white),
         child: Icon(
           icon,
-          color: index == currentIndex
+          size: 32,
+          color: intEq(index, currentIndex)
               ? ThemeColors.commonBlue
               : ThemeColors.darkThemeGrey,
         ),

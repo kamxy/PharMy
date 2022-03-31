@@ -50,7 +50,7 @@ class LocationItem extends StatelessWidget {
                     ),
                     LinearPercentIndicator(
                         lineHeight: 10.0,
-                        percent: location.totalPercent,
+                        percent: location.totalPercent.toDouble(),
                         backgroundColor: ThemeColors.subtitleGrey,
                         barRadius: const Radius.circular(10),
                         progressColor: ThemeColors.mainBlue),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:phar_my/components/common/commons.dart';
 import 'package:phar_my/utils/notifiers.dart';
 import 'package:provider/provider.dart';
 

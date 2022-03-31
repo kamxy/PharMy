@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:phar_my/main.dart';
 import 'package:phar_my/screens/app_pageview.dart';
 import 'package:phar_my/theme/style.dart';
 
@@ -15,15 +14,15 @@ class OnboardingCarouselScreen extends StatefulWidget {
 
 class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
   List<String> titles = [
-    "Atık Madendir!",
-    "Atık Noktanı Bul & Kodu Okut!",
-    "Dönüştür, Kazan & Tadını Çıkar"
+    "Waste is Mine!",
+    "Find The Recycle Point and Scan Code!",
+    "Recycle, Share & Enjoy"
   ];
 
   List<String> descs = [
-    "Her gün çöpe attığımız onca atığın ne kadar değerli olduğunu biliyor muydun?",
-    "Sana en yakın noktadaki atık noktasını bul ve İlaç atıklarının üzerindeki barkodu okut.",
-    "PharMy ile atıklarını çöpe atmak yerine geri dönüştürerek birbirinden güzel ödülleri kazan ve çevreyi koru!"
+    "Do you know how valuable all the waste you throw away every day is?",
+    "Find the waste point closest to you and scan the barcode on the pharmaceutical waste.",
+    "With Pharmate, recycle your waste instead of throwing it away, win beautiful rewards and protect the environment!"
   ];
 
   int currentPage = 0;
@@ -76,7 +75,9 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
                   ),
                   spacer(20),
                   !isDone
-                      ? const SizedBox()
+                      ? const SizedBox(
+                          height: 44,
+                        )
                       : InkWell(
                           onTap: () => Navigator.pushAndRemoveUntil(
                               context,
@@ -91,7 +92,7 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
                             ),
                             child: Center(
                               child: Text(
-                                "Hadi Başlayalım",
+                                "Let's Go",
                                 style: TextStyle(
                                     color: ThemeColors.white,
                                     fontSize: 18,
@@ -146,14 +147,16 @@ class _OnboardingCarouselScreenState extends State<OnboardingCarouselScreen> {
   }
 }
 
-Widget titleText(String title, {Color? color}) {
+Widget titleText(String title, {Color? color, double? size}) {
   return Text(
     title,
     textAlign: TextAlign.left,
+    maxLines: 3,
+    overflow: TextOverflow.ellipsis,
     style: TextStyle(
       color: color ?? ThemeColors.readerDark,
       fontFamily: TextFonts.helvatica,
-      fontSize: 22,
+      fontSize: size ?? 22,
       fontWeight: FontWeight.bold,
     ),
   );

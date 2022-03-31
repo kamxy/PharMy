@@ -24,7 +24,7 @@ class ThemeColors {
   static Color softGreen = Color(0xFF424B36);
   static Color mainPurple = Color(0xFF242330);
   static Color softPurple = Color(0xFF38364B);
-  static Color green = Color(0xFF04AC25);
+  static Color green = Color(0xFF45E942);
   static Color red = Color(0xFFD53D3D);
   static Color yellow = Color(0xFFFFD859);
   static Color subtitleGrey = Color(0xff98a6b3);

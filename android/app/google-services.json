@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "444944217279",
-    "project_id": "kou-research-project-tracking",
-    "storage_bucket": "kou-research-project-tracking.appspot.com"
+    "project_number": "775340296256",
+    "project_id": "pharmate-82f55",
+    "storage_bucket": "pharmate-82f55.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:444944217279:android:71086fedcc0caa4d78c20a",
+        "mobilesdk_app_id": "1:775340296256:android:13965eac1236d4235bf7a5",
         "android_client_info": {
-          "package_name": "com.kamay.PharMy"
+          "package_name": "com.example.phar_my"
         }
       },
       "oauth_client": [
         {
-          "client_id": "444944217279-a2odfu21496hop42c0iq9bj35bmql5p6.apps.googleusercontent.com",
+          "client_id": "775340296256-ea617nnl67telphavea5m4b654fsct78.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCKhyFUhB5A8QD-_WZyvZQ0m_9iGDeEmXk"
+          "current_key": "AIzaSyAVE5dPg86pkbpe1ohkvw5Pd-8jIA2tAes"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "444944217279-a2odfu21496hop42c0iq9bj35bmql5p6.apps.googleusercontent.com",
+              "client_id": "775340296256-ea617nnl67telphavea5m4b654fsct78.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "775340296256-7aqf67pefh6dklfmukkrmdpvnnn0f0lr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pharMy"
+              }
             }
           ]
         }

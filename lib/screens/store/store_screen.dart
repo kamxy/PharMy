@@ -29,34 +29,40 @@ class _StoreScreenState extends State<StoreScreen>
   Widget build(BuildContext context) {
     return Consumer<AppNotifier>(
       builder: (context, value, child) => Scaffold(
-        body: SafeArea(
-            child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-              height: 60,
-              alignment: Alignment.centerLeft,
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                titleText("Ödüller"),
-                Expanded(child: Container()),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        descText(value.user.worldPoint.toString()),
-                        spacerVertical(5),
-                        worldIcon(),
-                      ],
-                    ),
-                    const Text(
-                      "Dünya Puanı",
-                      style: TextStyle(fontSize: 10),
-                    )
-                  ],
-                ),
-                spacerVertical(10)
-              ]),
+        backgroundColor: ThemeColors.white,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: ThemeColors.white,
+          title: titleText("Prizes"),
+          leading: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(
+                Icons.arrow_back_ios_new_sharp,
+                color: ThemeColors.black,
+              )),
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      descText(value.user.worldPoint.toString()),
+                      spacerVertical(5),
+                      worldIcon(),
+                    ],
+                  ),
+                  Text(
+                    "World Points",
+                    style: TextStyle(fontSize: 10, color: ThemeColors.black),
+                  )
+                ],
+              ),
             ),
+          ],
+        ),
+        body: Column(
+          children: [
             tabBarView(),
             Expanded(
                 child: TabBarView(
@@ -75,7 +81,7 @@ class _StoreScreenState extends State<StoreScreen>
               controller: controller,
             ))
           ],
-        )),
+        ),
       ),
     );
   }
@@ -108,10 +114,10 @@ class _StoreScreenState extends State<StoreScreen>
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: [
               _tab(
-                ('İndirim Kuponları'),
+                ('Discount Coupons'),
               ),
               _tab(
-                ('Bağış Kampanyaları'),
+                ('Donation Campaigns'),
               )
             ],
           ),
