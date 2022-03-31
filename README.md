@@ -1,16 +1,15 @@
-# phar_my
+# Google DSC Flutterfest Hackhathon #1 🥇
 
-A new Flutter project.
+Teknoloji olarak flutter framework kullandık.
 
-## Getting Started
+Uygulamayı çalıştırmak için flutter run komutunu çalıştırmanız yeterlidir. Her 2 platformda da çalışır.
 
-This project is a starting point for a Flutter application.
+Ugulamamızın apk dosyalarını build/app/outputs/flutter-apk dizini altında bulup telefonunuza kurabilirsiniz.
 
-A few resources to get you started if this is your first Flutter project:
+- Network imageler için Firebase Storage servisini kullandık
+- Onbording sayfalarının bir sefer açılması için flutter secure storage kullandık
+- Çevremizde ki toplama noktalarına erişmek için google location hizmetlerini kullandık
+- State managment işlemleri için provider yapısını kullandık
+- Datalar için modeller yazıp rest api ya uygun olması için örnek json yapısıyla çalıştık
+- Hero widget ı sayesinde küçük animasyonlar ekledik uygulamamıza
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
