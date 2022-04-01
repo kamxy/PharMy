@@ -1,6 +1,6 @@
 # Google DSC [Flutterfest Hackhathon](https://flutterfestivali.com/) [#1](https://verified.cv/en/verify/07721333669081) 🥇
 
-![alt text](https://github.com/kamxy/Pharmate/blob/main/pharmate_logo.png?raw=true)
+![alt text](https://github.com/kamxy/Pharmate/blob/main/github_assets/pharmate_logo.png?raw=true)
 ![alt text](https://github.com/kamxy/Pharmate/blob/main/app_ss1.png?raw=true)
 
 ## Technologies
