@@ -32,9 +32,9 @@ $ flutter run
 
 <div class="row">
 
-   <img src = "https://github.com/kamxy/Pharmate/blob/main/github_assets/app_ss1.jpeg" witdth = "600" height="600">
-   <img src = "https://github.com/kamxy/Pharmate/blob/main/github_assets/app_ss2.jpeg" witdth = "600" height="600">
-   <img src = "https://github.com/kamxy/Pharmate/blob/main/github_assets/app_ss3.jpeg" witdth = "600" height="600">
+   <img src = "https://github.com/kamxy/Pharmate/blob/main/github_assets/app_ss1.jpeg" witdth = "500" height="500">
+   <img src = "https://github.com/kamxy/Pharmate/blob/main/github_assets/app_ss2.jpeg" witdth = "500" height="500">
+   <img src = "https://github.com/kamxy/Pharmate/blob/main/github_assets/app_ss3.jpeg" witdth = "500" height="500">
   
 </div>
 
